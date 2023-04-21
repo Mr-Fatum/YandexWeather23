@@ -39,4 +39,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
     // swipe
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    // jsonpath
+    implementation "com.jayway.jsonpath:json-path:2.8.0"
 }
