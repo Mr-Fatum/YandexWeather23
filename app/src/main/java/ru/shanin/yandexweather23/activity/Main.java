@@ -29,6 +29,7 @@ import ru.shanin.yandexweather23.data.responsedata.ResponseData;
 
 public class Main extends AppCompatActivity {
     private TextView textView;
+    private TextView textView1;
     private SwipeRefreshLayout refreshLayout;
     private APIServiceYandexWeather service;
     private City city;
@@ -45,6 +46,7 @@ public class Main extends AppCompatActivity {
 
     private void initView() {
         textView = findViewById(R.id.tw_weather);
+        textView1 = findViewById(R.id.toDay);
         refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(this::loadData);
     }
@@ -74,17 +76,16 @@ public class Main extends AppCompatActivity {
                         Object document = Configuration.defaultConfiguration().jsonProvider().parse(text);
                         String date = JsonPath.read(document, "$.forecast.date");
                         String condition = JsonPath.read(document, "$.fact.condition");
-                        String feelsLike = JsonPath.read(document, "$.part.feels_like");
-                        String windDir = JsonPath.read(document, "$.part.wind_dir");
-                        int windSpeed = JsonPath.read(document, "$.part.wind_speed");
-                        int tempMin = JsonPath.read(document, "$.part.temp_min");
-                        int tempMax = JsonPath.read(document, "$.part.temp_max");
-                        int tempAvg = JsonPath.read(document, "$.part.temp_avg");
-                        int humidity = JsonPath.read(document, "$.part.humidity");
-                        int pressureMm = JsonPath.read(document, "$.part.pressure_mm");
+                        int feelsLike = JsonPath.read(document, "$.fact.feels_like");
+                        String windDir = JsonPath.read(document, "$.fact.wind_dir");
+                        double windSpeed = JsonPath.read(document, "$.fact.wind_speed");
+                        int temp = JsonPath.read(document, "$.fact.temp");
+                        int humidity = JsonPath.read(document, "$.fact.humidity");
+                        int pressureMm = JsonPath.read(document, "$.fact.pressure_mm");
                         int moonCode = JsonPath.read(document, "$.forecast.moon_code");
-
-                        textView.setText("Today is: " + date + "\nCondition is: " + condition + "\nToday min temperature is: " + tempMin + "\nToday max temperature is: " + tempMax + "\nToday average temperature is: " + tempAvg + "\nTemperature feels like: " + feelsLike + "C°" + "\n Wind speed is: " + windSpeed + "m/s" + "\nWind direction is: " + windDir + "\n Today humidity is: " + humidity + "%" + "\nToday pressure is: " + pressureMm + "mm" + "\nToday moon code is: " + moonCode);
+                        String info = JsonPath.read(document, "$.responseData.info");
+                        textView1.setText(date);
+                        textView.setText("Condition is: " + condition + "\nToday temperature is: " + temp + "C°" + "\nTemperature feels like: " + feelsLike + "C°" + "\nWind speed is: " + windSpeed + "m/s" + "\nWind direction is: " + windDir + "\nToday humidity is: " + humidity + "%" + "\nToday pressure is: " + pressureMm + "mm" + "\nToday moon code is: " + moonCode);
 //                        Toast.makeText(
 //                                getApplicationContext(),
 //                                text,
